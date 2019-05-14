@@ -1,0 +1,25 @@
+.two{
+    border: 0;
+    height: 50px;
+    font-size: large;
+}
+
+.h3{
+    padding-bottom: 15px;
+}
+ul.nav li a:hover, ul.nav li a:active {
+    color: white !important;
+}
+
+.a{
+    text-decoration: none;
+}
+div > a:hover{
+    text-decoration: none;
+}
+
+.nav-item{
+    width: 75px;
+}
+
+
