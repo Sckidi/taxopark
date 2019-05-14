@@ -17,6 +17,16 @@ public class Order {
   private LocalDate receivingDate;
   private String address;
   private String driverId;
+  private String description;
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String aDescription) {
+    description = aDescription;
+  }
+
   @Enumerated
   private OrderStatus status;
 

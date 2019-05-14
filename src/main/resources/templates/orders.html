@@ -44,19 +44,26 @@
                     <input type="date" class="form-control" required name="receivingDate"
                            id="receivingDate" aria-describedby="inputGroup-sizing-receivingDate">
                 </div>
-                <div class="input-group col-md-3">
+                <div class="input-group col-md-2">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-address">Адрес</span>
                     </div>
                     <input type="text" class="form-control" required name="address"
                            id="address" aria-describedby="inputGroup-sizing-address"/>
                 </div>
-                <div class="input-group col-md-3">
+                <div class="input-group col-md-2">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-driverId"> id Водителя</span>
                     </div>
                     <input type="text" class="form-control" required name="driverId"
                            id="driverId" aria-describedby="inputGroup-sizing-driverId"/>
+                </div>
+                <div class="input-group col-md-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-description">Описание</span>
+                    </div>
+                    <input type="text" class="form-control" required name="description"
+                           id="description" aria-describedby="inputGroup-sizing-description"/>
                 </div>
                 <div class="input-group col-md-12">
                     <input type="submit" id="registerButton" class="btn btn-primary form-control" value="Добавить">
@@ -77,6 +84,7 @@
             <th scope="col">Дата получения</th>
             <th scope="col">Адрес</th>
             <th scope="col">id Водителя</th>
+            <th scope="col">Описание</th>
             <th scope="col">
         </tr>
         </thead>
@@ -87,6 +95,7 @@
             <td scope="col"><input type="date" disabled th:value="${order.getReceivingDate()}"></td>
             <td scope="col"><p th:text="${order.getAddress()}"></td>
             <td scope="col"><p th:text="${order.getDriverId()}"></td>
+            <td scope="col"><p th:text="${order.getDescription()}"></td>
             <td scope="col">
                 <div>
                     <a th:href="'/orders/del/'+${order.getId()}" role="button"

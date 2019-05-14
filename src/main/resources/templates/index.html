@@ -23,11 +23,8 @@
                                                        aria-disabled="true">Выход</a></li>
     </ul>
     <div class="center" th:unless="${isAuhorised}">
-        <h3 style="text-align: center">Вы не вошли в систему, гостям доступны две функции:</h3>
+        <h3 style="text-align: center">Вы не вошли в систему, гостям доступнa функция:</h3>
         <div class="row">
-            <div class="col">
-                <a href="/cars"> <button type="button" class="btn btn-primary btn-lg btn-block two">Машины</button></a>
-            </div>
             <div class="col">
                 <a href="/list"><button type="button" class="btn btn-primary btn-lg btn-block two">Черный список</button></a>
             </div>
@@ -36,9 +33,6 @@
     <div class="center" th:if="${isAuhorised}">
         <h3 style="text-align: center">Добро пожаловать!</h3>
         <div class="row">
-            <div class="col">
-                <a href="/cars"> <button type="button" class="btn btn-primary btn-lg btn-block two">Машины</button></a>
-            </div>
             <div class="col">
                 <a href="/list"><button type="button" class="btn btn-primary btn-lg btn-block two">Черный список</button></a>
             </div>
