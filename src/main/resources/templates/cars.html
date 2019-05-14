@@ -13,16 +13,14 @@
 <div class="container">
     <ul class="nav nav-pills nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="/home">Главная</a>
+            <a class="nav-link active" th:href="@{/home}">Главная</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Машины</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/list">Черный лист</a>
-        </li>
-        <li class="nav-item pull-right"><a href="/register"><span class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
-        <li class="nav-item"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item pull-right"><a th:href="@{/register}"><span
+                class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item"><a th:href="@{/login}"><span
+                class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:if="${isAuhorised}" class="nav-item"><a class="nav-item nav-link" th:href="@{/logout}" tabindex="-1"
+                                                       aria-disabled="true">Выход</a></li>
     </ul>
 <div class="container center">
     <table class="table table-striped">

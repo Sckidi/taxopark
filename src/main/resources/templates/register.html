@@ -15,15 +15,19 @@
                     <div class="card-header">Регистрация</div>
                     <div class="card-body">
 
-                        <form class="form-horizontal" method="post" action="#">
-
+                        <form role="form" th:object="${form}" th:action="@{/register}" method="post" class="form-horizontal">
                             <div class="form-group">
                                 <label for="name" class="cols-sm-2 control-label">Username</label>
                                 <div class="cols-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Username" />
+                                        <input type="text" class="form-control" name="username" id="name" placeholder="Username" />
                                     </div>
+                                </div>
+                            </div>
+                            <div th:if="${loginError}" id="loginError">
+                                <div class="alert alert-danger">
+                                    Данный логин уже занят
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,11 +48,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="passwordMismatch" style="display: none">
+                                <div class="alert alert-danger">
+                                    Пароли не совпадают!
+                                </div>
+                            </div>
                             <div class="form-group ">
-                                <button type="button" class="btn btn-success btn-lg btn-block login-button">Зарегистрироваться</button>
+                                <input type="submit" id="registerButton" class="btn btn-primary btn-lg btn-block" value="Зарегистрироваться">
                             </div>
                             <div class="login-register">
-                                <a href="/login">Войти</a>
+                                <a href="login.html">Войти</a>
                             </div>
                         </form>
                     </div>
@@ -62,5 +71,26 @@
 <script th:src="@{/js/jquery-ui.min.js}" type="text/javascript"></script>
 <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
 <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.css}"></script>
+<script>
+  function validatePasswordMismatch(){
+    let password1 = document.getElementById('password').value;
+    let password2 = document.getElementById('confirm').value;
+    let element = document.getElementById('passwordMismatch');
+    let button = document.getElementById('registerButton');
+    if (password1!==password2) {
+      element.style.display = "block";
+      button.disabled = true;
+    }else{
+      element.style.display = "none";
+      button.disabled = false;
+    }
+  }
+  function disableLoginError() {
+    let element = document.getElementById('loginError');
+    if (typeof (element) != 'undefined' && element != null) {
+      element.style.display = "none";
+    }
+  }
+</script>
 </body>
 </html>

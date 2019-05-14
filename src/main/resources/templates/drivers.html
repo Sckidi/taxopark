@@ -13,18 +13,55 @@
 <div class="container">
     <ul class="nav nav-pills nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="/authorized">Главная</a>
+            <a class="nav-link active" th:href="@{/home}">Главная</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/cars">Машины</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/list">Черный лист</a>
-        </li>
-        <li class="nav-item pull-right"><a href="/register"><span class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
-        <li class="nav-item"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item pull-right"><a th:href="@{/register}"><span
+                class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item"><a th:href="@{/login}"><span
+                class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:if="${isAuhorised}" class="nav-item"><a class="nav-item nav-link" th:href="@{/logout}" tabindex="-1"
+                                                       aria-disabled="true">Выход</a></li>
     </ul>
-
+    <div class="mt-10">
+        <form role="form" th:object="${form}" th:action="@{/drivers}" method="post" class="order form-horizontal">
+            <div th:if="${addedSuccessful}" id="addedSuccessful">
+                <div class="alert alert-success">
+                    Ваш заказ добавлен!
+                </div>
+            </div>
+            <div class="form-row mb-3">
+                <div class="input-group col-md-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-name">Прозвище</span>
+                    </div>
+                    <input type="text" class="form-control" required name="name"
+                           id="name" aria-describedby="inputGroup-sizing-name"/>
+                </div>
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-consignmentAmount">Номер водительского</span>
+                    </div>
+                    <input type="text" class="form-control" required name="licenseNumber"
+                           id="licenseNumber" aria-describedby="inputGroup-sizing-licenseNumber"/>
+                </div>
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-date">Дата получения</span>
+                    </div>
+                    <input type="date" class="form-control" required name="date"
+                           id="date" aria-describedby="inputGroup-sizing-date">
+                </div>
+                <div class="input-group col-md-12">
+                    <input type="submit" id="registerButton"  class="btn btn-primary form-control"  value="Добавить">
+                </div>
+            </div>
+            <div th:if="${driverError}" id="loginError">
+                <div class="alert alert-danger">
+                    Данный водитель уже зарегистрирован!
+                </div>
+            </div>
+        </form>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -32,26 +69,20 @@
             <th scope="col">Прозвище</th>
             <th scope="col">Номер водительского удостоверения</th>
             <th scope="col">Дата получения</th>
+            <th scope="col">Действие</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Петрович</td>
-            <td>1784924</td>
-            <td>12.12.2019</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Сан саныч</td>
-            <td>1952612</td>
-            <td>02.07.2017</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Димоныч</td>
-            <td>1137242</td>
-            <td>01.02.2012</td>
+        <tr th:each="driver : ${drivers}">
+            <td scope="col"><p th:text="${driver.getId()}"></p></td>
+            <td scope="col"><p th:text="${driver.getName()}"></td>
+            <td scope="col"><p th:text="${driver.getLicenseNumber()}"></td>
+            <td scope="col"><input type="date" disabled th:value="${driver.getDate()}"></td>
+            <td scope="col">
+                <div>
+                    <a th:href="'/drivers/del/'+${driver.getId()}" role="button" class="btn btn-success ml-0">Удалить</a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

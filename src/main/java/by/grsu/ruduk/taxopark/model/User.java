@@ -3,7 +3,7 @@ package by.grsu.ruduk.taxopark.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,12 +11,6 @@ public class User {
     private String username;
     private String password;
     private String name;
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
 
     public Long getId() {
         return id;
@@ -24,14 +18,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     public String getUsername() {

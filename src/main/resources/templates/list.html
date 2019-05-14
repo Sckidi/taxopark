@@ -13,18 +13,54 @@
 <div class="container">
     <ul class="nav nav-pills nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="/home">Главная</a>
+            <a class="nav-link active" th:href="@{/home}">Главная</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/cars">Машины</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Черный лист</a>
-        </li>
-        <li class="nav-item pull-right"><a href="/register"><span class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
-        <li class="nav-item"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item pull-right"><a th:href="@{/register}"><span
+                class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
+        <li th:unless="${isAuhorised}" class="nav-item"><a th:href="@{/login}"><span
+                class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+        <li th:if="${isAuhorised}" class="nav-item"><a class="nav-item nav-link" th:href="@{/logout}" tabindex="-1"
+                                                       aria-disabled="true">Выход</a></li>
     </ul>
-<h2 style="text-align: center">Черный список:</h2>
+    <h2 style="text-align: center">Черный список:</h2>
+    <form th:if="${isAuhorised}" role="form" th:object="${form}" th:action="@{/list}" method="post" class="order form-horizontal">
+        <div th:if="${addedSuccessful}" id="addedSuccessful">
+            <div class="alert alert-success">
+                Ваш заказ добавлен!
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="input-group col-md-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-login">Логин</span>
+                </div>
+                <input type="text" class="form-control" required name="login"
+                       id="login" aria-describedby="inputGroup-sizing-login"/>
+            </div>
+            <div class="input-group col-md-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-cause">Причина занесения</span>
+                </div>
+                <input type="text" class="form-control" required name="cause"
+                       id="cause" aria-describedby="inputGroup-sizing-cause"/>
+            </div>
+            <div class="input-group col-md-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-date">Дата занесения</span>
+                </div>
+                <input type="date" class="form-control" required name="date"
+                       id="date" aria-describedby="inputGroup-sizing-date">
+            </div>
+            <div class="input-group col-md-12">
+                <input type="submit" id="registerButton"  class="btn btn-primary form-control"  value="Добавить">
+            </div>
+        </div>
+        <div th:if="${blackListError}" id="loginError">
+            <div class="alert alert-danger">
+                Данный человек уже в списке!
+            </div>
+        </div>
+    </form>
     <table class="table">
         <thead class="thead-dark">
         <tr>
@@ -32,26 +68,20 @@
             <th scope="col">Логин</th>
             <th scope="col">Причина занесения</th>
             <th scope="col">Дата занесения</th>
+            <th th:if="${isAuhorised}" scope="col">Действие</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Зезюля</td>
-            <td>Напився</td>
-            <td>02.02.2019</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Шкут</td>
-            <td>Воняет</td>
-            <td>02.02.2019</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Жора</td>
-            <td>Длинный</td>
-            <td>02.02.2019</td>
+        <tr th:each="el : ${list}">
+            <td scope="col"><p th:text="${el.getId()}"></p></td>
+            <td scope="col"><p th:text="${el.getLogin()}"></td>
+            <td scope="col"><p th:text="${el.getCause()}"></td>
+            <td scope="col"><input type="date" disabled th:value="${el.getDate()}"></td>
+            <td th:if="${isAuhorised}" scope="col">
+                <div>
+                    <a th:href="'/list/del/'+${el.getId()}" role="button" class="btn btn-success ml-0">Удалить</a>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
