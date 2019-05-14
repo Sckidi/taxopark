@@ -58,15 +58,6 @@
                     <input type="text" class="form-control" required name="driverId"
                            id="driverId" aria-describedby="inputGroup-sizing-driverId"/>
                 </div>
-                <div class="input-group col-md-1">
-                    <select class="form-control" required name="product"
-                            id="inputState" aria-describedby="inputGroup-sizing-inputState">
-                        <option  th:each="status : ${statuses}"
-                                th:value="${status}"
-                                th:text="${status.getDescription()}">
-                        </option>
-                    </select>
-                </div>
                 <div class="input-group col-md-12">
                     <input type="submit" id="registerButton" class="btn btn-primary form-control" value="Добавить">
                 </div>
@@ -84,10 +75,8 @@
             <th scope="col">#</th>
             <th scope="col">Номер заказа</th>
             <th scope="col">Дата получения</th>
-            <th scope="col">Время получения</th>
             <th scope="col">Адрес</th>
             <th scope="col">id Водителя</th>
-            <th scope="col">Статус</th>
             <th scope="col">
         </tr>
         </thead>
@@ -98,7 +87,6 @@
             <td scope="col"><input type="date" disabled th:value="${order.getReceivingDate()}"></td>
             <td scope="col"><p th:text="${order.getAddress()}"></td>
             <td scope="col"><p th:text="${order.getDriverId()}"></td>
-            <td></td>
             <td scope="col">
                 <div>
                     <a th:href="'/orders/del/'+${order.getId()}" role="button"
