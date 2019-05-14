@@ -8,4 +8,12 @@ public enum OrderStatus {
     private String description;
 
     OrderStatus(String description) {this.description = description;}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String aDescription) {
+        description = aDescription;
+    }
 }
